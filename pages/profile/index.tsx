@@ -143,7 +143,6 @@ export default function Profile() {
     });
   };
 
-
   useEffect(() => {
     if (!user) {
       router.push("/register");
@@ -239,133 +238,133 @@ export default function Profile() {
   return (
     <>
       <SiteHead />
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          プロフィール
-        </h2>
+      <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+        プロフィール
+      </h2>
 
-        <List
-          sx={{ width: "100%", maxWidth: 300, bgcolor: "background.paper" }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              アカウントメニュー
-            </ListSubheader>
-          }
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <Link href="/profile/edit"> プロフィールを変更する</Link>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <button className="" onClick={deleteuser}>
-              アカウントを退会する
-            </button>
-          </ListItemButton>
-          {/* <button className="m-5">
+      <List
+        sx={{ width: "100%", maxWidth: 300, bgcolor: "background.paper" }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            アカウントメニュー
+          </ListSubheader>
+        }
+      >
+        <ListItemButton>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <Link href="/profile/edit"> プロフィールを変更する</Link>
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <button className="" onClick={deleteuser}>
+            アカウントを退会する
+          </button>
+        </ListItemButton>
+        {/* <button className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </button> */}
-          <ListItemButton>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <Link href="/profile/edit/password">パスワードを変更する</Link>
-          </ListItemButton>
-        </List>
+        <ListItemButton>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <Link href="/profile/edit/password">パスワードを変更する</Link>
+        </ListItemButton>
+      </List>
 
-        <>
-          {users &&
-            users.map((data) => {
-              return (
-                <>
-                  <Profileid
-                    key={data.id}
-                    profileimage={data.profileimage}
-                    username={data.username}
-                    bio={data.bio}
-                    favarite={data.favarite}
-                    id={0}
-                  />
-                </>
-              );
-            })}
-        </>
+      <>
+        {users &&
+          users.map((data) => {
+            return (
+              <>
+                <Profileid
+                  key={data.id}
+                  profileimage={data.profileimage}
+                  username={data.username}
+                  bio={data.bio}
+                  favarite={data.favarite}
+                  id={0}
+                />
+              </>
+            );
+          })}
+      </>
 
-        <p className="my-12 text-center text-2xl font-semibold">過去の投稿</p>
-        <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
-        <div>
-          <ResponsiveContainer height={256}>
-            <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-              <Pie
-                dataKey="value"
-                data={sample_data}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                labelLine={false}
-                label={renderCustomizedLabel}
-                isAnimationActive={true}
-              >
-                {sample_data.map((entry, index) => (
-                  <Cell fill={COLORS[index % COLORS.length]} key={index} />
-                ))}
-              </Pie>
-              <Legend verticalAlign="bottom" wrapperStyle={{ bottom: 18 }} />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+      <p className="my-12 text-center text-2xl font-semibold">過去の投稿</p>
+      <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
+      <div>
+        <ResponsiveContainer height={256}>
+          <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
+            <Pie
+              dataKey="value"
+              data={sample_data}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              labelLine={false}
+              label={renderCustomizedLabel}
+              isAnimationActive={true}
+            >
+              {sample_data.map((entry, index) => (
+                <Cell fill={COLORS[index % COLORS.length]} key={index} />
+              ))}
+            </Pie>
+            <Legend verticalAlign="bottom" wrapperStyle={{ bottom: 18 }} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
 
-        <TextField
-          type="text"
-          id="outlined-basic"
-          label="考察記事を検索する"
-          variant="outlined"
-          onChange={(event) => {
-            setSearchName(event.target.value);
-          }}
-        />
+      <TextField
+        type="text"
+        id="outlined-basic"
+        label="考察記事を検索する"
+        variant="outlined"
+        onChange={(event) => {
+          setSearchName(event.target.value);
+        }}
+      />
 
-        <Grid container className="m-auto">
-          {firedata == [] && <p>まだ投稿していません</p>}
-          {firedata
-            .filter((data) => {
-              if (searchName === "") {
-                return data;
-                //そのまま返す
-              } else if (
-                data.title.toLowerCase().includes(searchName.toLowerCase())
-                //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-              ) {
-                return data;
-              }
-            })
-            .map((data) => {
-              return (
-                <>
-                  <Cardpost
-                    key={data.id}
-                    downloadURL={data.downloadURL}
-                    title={data.title}
-                    categori={data.categori}
-                    netabare={data.netabare}
-                    context={data.context}
-                    createtime={data.createtime}
-                    displayname={data.displayname}
-                    email={data.email}
-                    id={data.id}
-                    photoURL={data.photoURL}
-                    likes={data.likes}
-                    selected={data.selected}
-                  />
-                </>
-              );
-            })}
-        </Grid>
+      <Grid container className="m-auto">
+        {firedata.length == 0 && <p>まだ投稿していません</p>}
+        {firedata
+          .filter((data) => {
+            if (searchName === "") {
+              return data;
+              //そのまま返す
+            } else if (
+              data.title.toLowerCase().includes(searchName.toLowerCase())
+              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+            ) {
+              return data;
+            }
+          })
+          .map((data) => {
+            return (
+              <>
+                <Cardpost
+                  key={data.id}
+                  downloadURL={data.downloadURL}
+                  title={data.title}
+                  categori={data.categori}
+                  netabare={data.netabare}
+                  context={data.context}
+                  createtime={data.createtime}
+                  displayname={data.displayname}
+                  email={data.email}
+                  id={data.id}
+                  photoURL={data.photoURL}
+                  likes={data.likes}
+                  selected={data.selected}
+                />
+              </>
+            );
+          })}
+      </Grid>
     </>
   );
 }
